@@ -16,14 +16,11 @@ class Customer {
         let combinedInfo = [];
         this.bookedRooms.forEach((roomNumber) => {
             let foundRoom = this.rooms.find(room => {
-                console.log("roomNumber",roomNumber)
-                console.log("room", room)
+
                 return roomNumber.roomNumber === room.number
             })
-            console.log("Foundroom",foundRoom)
             combinedInfo.push({...foundRoom,...roomNumber})
         })
-        console.log("combinedInfo",combinedInfo)
         let modifiedCombinedInfo = combinedInfo.reduce((clean,item) => {
             clean.push({bedSize: item.bedSize,
                         bidet:item.bidet,
@@ -37,20 +34,14 @@ class Customer {
                         })
             return clean
         },[])
-        console.log("modifiedCombinedInfo", modifiedCombinedInfo)
         return this.fullBookingsData = modifiedCombinedInfo
     }
 
     totalAmountSpent() {
-       let bookedRoomsNumbers = this.bookedRooms.reduce((roomNumbers, bookings) => {
-            roomNumbers.push(bookings.roomNumber)
-            return roomNumbers
-        },[])
-
-        let total = bookedRoomsNumbers.reduce((total,booking) => {
+       return this.fullBookingsData.reduce((total,booking)=> {
             total += booking.costPerNight
             return total
-        },0)
+       },0)
     }
 }
 

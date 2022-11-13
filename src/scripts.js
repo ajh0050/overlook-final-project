@@ -1,10 +1,16 @@
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.css';
+import Customer from './classes/customer'
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 
 ///query selectors
+let customerView = document.querySelector('.customer-view')
+
+let customerTitle = document.querySelector('.customer-title')
+let allCustomerBookings = document.querySelector('.all-customer-bookings')
+
 
 /// global variables
 let customers
@@ -31,9 +37,31 @@ function loadHandler() {
     console.log("customers",customers)
     console.log("rooms",rooms)
     console.log("bookings",bookings)
-    currentCustomer = customers.customers[0]
+    currentCustomer = new Customer(customers.customers[0],bookings,rooms )
     console.log(currentCustomer)
+    displayCustomerDashBoard()
 }
 
+function displayCustomerDashBoard () {
+    customerTitle.innerText = '';
+    console.log("current-cx",currentCustomer)
+    customerTitle.innerText = `Welcome ${currentCustomer.name}`
+    currentCustomer.fullBookingsData.forEach(item => {
+        allCustomerBookings.innerHTML += `
+        <section class="customer-booking-card">
+            <title class="booking-card-date">${item.date}</title>
+            <div class="booking-details-card">
+                Room type -${item.roomtype} <br>
+                Bed size -${item.bedSize} <br>
+                Number of beds - ${item.numBeds}
+                Cost/night - ${item.costPerNight} <br>
+                Bidet - ${item.bidet}
+            </div>
+        </section>
+        ` 
+    })
+
+
+}
 /// event listeners
 window.addEventListener("load", apiCalls())

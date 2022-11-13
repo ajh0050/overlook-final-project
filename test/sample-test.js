@@ -21,7 +21,7 @@ let customer = new Customer({id: 1, name: 'Leatha Ullrich'},bookings,rooms)
   });
 
   it('should have a method that returns total amount spent by customer', function() {
-    expect(customer.fullBookingsData).to.deep.equal([6537843]);
+    expect(customer.totalAmountSpent()).to.equal(725.17);
   });
 
 });
