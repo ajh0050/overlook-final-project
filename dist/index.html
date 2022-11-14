@@ -8,6 +8,7 @@
 </head>
 <body>
   <section class="customer-view">
+    <button class="new-booking-view-button">Make a new booking</button>
     <title class="customer-title"></title>
     <section class="all-customer-bookings">
       <section class="customer-booking-card">
@@ -15,7 +16,17 @@
         <div class="booking-details-card"></div>
       </section>
     </section>
-    
+  </section>
+  <section class="new-booking-view">
+    <form class="new-booking-form">
+      <label for="userID">UserID</label>
+      <input type="text" id="userID" class="input">
+      <label for="date">Date</label>
+      <input type="text" id="Date" placeholder="fullyear/month/day" class="input">
+      <label for="roomNumber">Room NUmber</label>
+      <input type="text" id="roomNumber"  class="input">
+      <button class="book-new-room-button">Book Room</button>
+    </form>
   </section>
   
   <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->

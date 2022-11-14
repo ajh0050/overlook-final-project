@@ -7,9 +7,12 @@ import './images/turing-logo.png'
 
 ///query selectors
 let customerView = document.querySelector('.customer-view')
+let newBookingView = document.querySelector('.new-booking-view')
 
 let customerTitle = document.querySelector('.customer-title')
 let allCustomerBookings = document.querySelector('.all-customer-bookings')
+
+let newBookingViewButton = document.querySelector('.new-booking-view-button')
 
 
 /// global variables
@@ -60,8 +63,25 @@ function displayCustomerDashBoard () {
         </section>
         ` 
     })
+}
 
+function displayNewBookingView () {
+    showElement(newBookingView)
+    hideElement(customerView)
+}
 
+function hideElement (element) {
+    element.classList.add("hidden")
+}
+
+function showElement (element) {
+    element.classList.remove("hidden")
 }
 /// event listeners
 window.addEventListener("load", apiCalls())
+
+newBookingViewButton.addEventListener("click", function(event){
+    event.preventDefault();
+    displayNewBookingView();
+    console.log("button worked")
+})
