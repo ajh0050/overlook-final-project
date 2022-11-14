@@ -7,9 +7,17 @@ import './images/turing-logo.png'
 
 ///query selectors
 let customerView = document.querySelector('.customer-view')
+let newBookingView = document.querySelector('.new-booking-view')
 
 let customerTitle = document.querySelector('.customer-title')
 let allCustomerBookings = document.querySelector('.all-customer-bookings')
+
+let newBookingViewButton = document.querySelector('.new-booking-view-button')
+let newBookingSubmitButton = document.querySelector('.book-new-room-button')
+
+let newBookingUserIdInput = document.querySelector('#userID')
+let newBookingDateInput = document.querySelector('#date')
+let newBookingRoomNumberInput = document.querySelector('#roomNumber')
 
 
 /// global variables
@@ -60,8 +68,54 @@ function displayCustomerDashBoard () {
         </section>
         ` 
     })
+}
 
+function displayNewBookingView () {
+    showElement(newBookingView)
+    hideElement(customerView)
+}
+
+function hideElement (element) {
+    element.classList.add("hidden")
+}
+
+function showElement (element) {
+    element.classList.remove("hidden")
+}
+
+function postNewBooking() {
+    let postTemplate = {
+        "userID": Number(newBookingUserIdInput.value),
+        "date": newBookingDateInput.value,
+        "roomNumber": Number(newBookingRoomNumberInput.value)
+    }
+    fetch('http://localhost:3001/api/v1/bookings', {
+        method: "POST",
+        body: JSON.stringify(postTemplate),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Post Response", response)
+            return response.json()
+        }
+        throw new Error (response.status)
+    })
+    .then(data => console.log("POST DATA",data))
+    .catch(error => console.log("ERROR", error))
 
 }
 /// event listeners
 window.addEventListener("load", apiCalls())
+
+newBookingViewButton.addEventListener("click", function(event){
+    event.preventDefault();
+    displayNewBookingView();
+})
+
+newBookingSubmitButton.addEventListener("click", function (event) {
+    event.preventDefault()
+    postNewBooking()
+})
