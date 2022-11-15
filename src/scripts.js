@@ -11,13 +11,16 @@ let newBookingView = document.querySelector('.new-booking-view')
 
 let customerTitle = document.querySelector('.customer-title')
 let allCustomerBookings = document.querySelector('.all-customer-bookings')
+let selectedDateBookings = document.querySelector('.selected-date-bookings')
 
 let newBookingViewButton = document.querySelector('.new-booking-view-button')
 let newBookingSubmitButton = document.querySelector('.book-new-room-button')
+let selectDateButton = document.querySelector('.select-date-submit')
 
 let newBookingUserIdInput = document.querySelector('#userID')
 let newBookingDateInput = document.querySelector('#date')
 let newBookingRoomNumberInput = document.querySelector('#roomNumber')
+let dateChosenInput = document.querySelector('#dateChosen')
 
 
 /// global variables
@@ -52,6 +55,7 @@ function loadHandler() {
 
 function displayCustomerDashBoard () {
     customerTitle.innerText = '';
+    allCustomerBookings.innerHTML = '';
     console.log("current-cx",currentCustomer)
     customerTitle.innerText = `Welcome ${currentCustomer.name}`
     currentCustomer.fullBookingsData.forEach(item => {
@@ -59,9 +63,9 @@ function displayCustomerDashBoard () {
         <section class="customer-booking-card">
             <title class="booking-card-date">${item.date}</title>
             <div class="booking-details-card">
-                Room type -${item.roomtype} <br>
-                Bed size -${item.bedSize} <br>
-                Number of beds - ${item.numBeds}
+                Room type - ${item.roomType} <br>
+                Bed size - ${item.bedSize} <br>
+                Number of beds - ${item.numBeds} <br>
                 Cost/night - ${item.costPerNight} <br>
                 Bidet - ${item.bidet}
             </div>
@@ -105,7 +109,34 @@ function postNewBooking() {
     })
     .then(data => console.log("POST DATA",data))
     .catch(error => console.log("ERROR", error))
-
+}
+function viewDateBookings (passedInDate) {
+   let filteredSelectedDateBookings = bookings.bookings.filter((booking) => {
+    console.log("booking in view date booking",booking)
+    console.log("passed in date",passedInDate)
+    if (booking.date === passedInDate) {
+        return true
+    }
+})
+   console.log("selectedDateBookings",selectedDateBookings)
+   selectedDateBookings.innerHTML = ''
+   filteredSelectedDateBookings.forEach(item => {
+    console.log("item in for Each selected date bookings",item)
+    selectedDateBookings.innerHTML += `
+    <section class="customer-booking-card">
+        <title class="booking-card-date">${item.date}</title>
+        <div class="booking-details-card">
+            Room type - ${item.roomType} <br>
+            Bed size - ${item.bedSize} <br>
+            Number of beds - ${item.numBeds} <br>
+            Cost/night - ${item.costPerNight} <br>
+            Bidet - ${item.bidet}
+        </div>
+    </section>
+    `
+   })
+   hideElement(allCustomerBookings)
+   showElement(selectedDateBookings)
 }
 /// event listeners
 window.addEventListener("load", apiCalls())
@@ -118,4 +149,9 @@ newBookingViewButton.addEventListener("click", function(event){
 newBookingSubmitButton.addEventListener("click", function (event) {
     event.preventDefault()
     postNewBooking()
+})
+
+selectDateButton.addEventListener("click", function (event){
+    event.preventDefault();
+    viewDateBookings(dateChosenInput.value.toString())
 })

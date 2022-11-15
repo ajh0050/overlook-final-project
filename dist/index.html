@@ -8,8 +8,16 @@
 </head>
 <body>
   <section class="customer-view">
-    <button class="new-booking-view-button">Make a new booking</button>
-    <title class="customer-title"></title>
+    <header class="customer-dashboard-header">
+      <title class="customer-title"></title>
+      <button class="new-booking-view-button">Make a new booking</button>
+      <form class="customer-select-date-form">
+        <label for="date">Type Date</label>
+        <input type="text" id="dateChosen" placeholder="fullyear/month/day" class="input">
+        <button class="select-date-submit">Select Date</button>
+      </form>
+    </header>
+    <section class="selected-date-bookings"></section>
     <section class="all-customer-bookings">
       <section class="customer-booking-card">
         <title class="booking-card-date"></title>
