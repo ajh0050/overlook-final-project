@@ -14,3 +14,30 @@ body {
 .hidden {
   display: none;
 }
+
+.customer-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.customer-dashboard-header {
+  display:flex;
+  flex: row;
+}
+
+.all-customer-bookings {
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.customer-booking-card {
+  display:flex;
+  flex-direction: column;
+  height: 20vh;
+  width: 20vw;
+}
+
+.booking-card-date {
+  display: flex;
+}
